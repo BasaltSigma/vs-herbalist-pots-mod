@@ -1,0 +1,13 @@
+{
+    "type": "code",
+    "modid": "herbalistpots",
+    "name": "Herbalist Pots",
+    "authors": [
+        "BasaltSigma"
+    ],
+    "description": "Clay pots that grow more flowers once planted",
+    "version": "0.21.0",
+    "dependencies": {
+        "game": "1.21"
+    }
+}

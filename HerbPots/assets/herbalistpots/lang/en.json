@@ -1,0 +1,25 @@
+{
+  "block-herbalist-pot-red-raw": "Raw red clay herbalist pot",
+  "block-herbalist-pot-blue-raw": "Raw blue clay herbalist pot",
+  "block-herbalist-pot-fire-raw": "Raw fire clay herbalist pot",
+  "block-herbalist-pot-black-fired": "Black ceramic herbalist pot",
+  "block-herbalist-pot-blue-fired": "Dark brown ceramic herbalist pot",
+  "block-herbalist-pot-brown-fired": "Brown ceramic herbalist pot",
+  "block-herbalist-pot-cream-fired": "Cream ceramic herbalist pot",
+  "block-herbalist-pot-fire-fired": "Fireclay ceramic herbalist pot",
+  "block-herbalist-pot-gray-fired": "Gray ceramic herbalist pot",
+  "block-herbalist-pot-orange-fired": "Orange ceramic herbalist pot",
+  "block-herbalist-pot-red-fired": "Red ceramic herbalist pot",
+  "block-herbalist-pot-tan-fired": "Tan ceramic herbalist pot",
+
+  "info-no-flower-set": "Missing a flower to grow",
+  "info-planted-herb": "Planted: {0}",
+  "info-products-available": "{0} Sprouts Available",
+  "info-products-empty": "Nothing grown yet",
+
+  "blockhelp-herbalist-pot-plant": "Plant",
+  "blockhelp-herbalist-pot-harvest": "Harvest",
+  "blockhelp-herbalist-pot-clear": "Clear",
+
+  "clayforming-herbalist-pot": "Raw Herbalist Pot"
+}
