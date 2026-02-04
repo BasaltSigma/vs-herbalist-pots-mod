@@ -47,7 +47,10 @@
       "maxGrownStackSize": 4
     },
     "handbook": {
-      "groupBy": [ "herbalist-pot-*-{state}" ]
+      "groupBy": [ "herbalist-pot-*-{state}" ],
+      "extraSections": [
+        {"title": "herbalistpots:block-handbooktitle-herbalist-pot", "text": "herbalistpots:block-handbooktext-herbalist-pot"}
+      ]
     }
   },
   "creativeinventory": {

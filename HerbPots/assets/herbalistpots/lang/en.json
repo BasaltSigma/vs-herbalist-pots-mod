@@ -21,5 +21,8 @@
   "blockhelp-herbalist-pot-harvest": "Harvest",
   "blockhelp-herbalist-pot-clear": "Clear",
 
-  "clayforming-herbalist-pot": "Raw Herbalist Pot"
+  "clayforming-herbalist-pot": "Raw Herbalist Pot",
+
+  "block-handbooktitle-herbalist-pot": "Usage",
+  "block-handbooktext-herbalist-pot": "Herbalist pots allow a flower to be planted in them and will then slowly create extra flowers. To collect, right click on harvestable herbalist pot with shears"
 }

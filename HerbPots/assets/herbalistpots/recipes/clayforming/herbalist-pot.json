@@ -1,7 +1,7 @@
 {
   "ingredient": {
     "type": "item",
-    "code": "clay-*",
+    "code": "game:clay-*",
     "name": "type",
     "allowedVariants": [ "blue", "fire", "red" ]
   },
@@ -133,6 +133,6 @@
       "############"
     ]
   ],
-  "name": "clayforming-herbalist-pot",
-  "output": {"type": "block", "code": "herbalist-pot-{type}-raw"}
+  "name": "clayforming",
+  "output": {"type": "block", "code": "herbalistpots:herbalist-pot-{type}-raw"}
 }

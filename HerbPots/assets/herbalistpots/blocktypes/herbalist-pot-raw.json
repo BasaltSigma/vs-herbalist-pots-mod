@@ -34,7 +34,10 @@
       "scale": 0.6
     },
     "handbook": {
-      "groupBy": [ "herbalist-pot-*-{type}" ]
+      "groupBy": [ "herbalist-pot-*-{state}" ],
+      "extraSections": [
+        {"title": "herbalistpots:block-handbooktitle-herbalist-pot", "text": "herbalistpots:block-handbooktext-herbalist-pot"}
+      ]
     }
   },
   "attributesByType": {
@@ -42,19 +45,19 @@
       "beehivekiln": {
         "0": {
           "type": "block",
-          "code": "herbalist-pot-tan-fired"
+          "code": "herbalistpots:herbalist-pot-tan-fired"
         },
         "1": {
           "type": "block",
-          "code": "herbalist-pot-orange-fired"
+          "code": "herbalistpots:herbalist-pot-orange-fired"
         },
         "2": {
           "type": "block",
-          "code": "herbalist-pot-red-fired"
+          "code": "herbalistpots:herbalist-pot-red-fired"
         },
         "3": {
           "type": "block",
-          "code": "herbalist-pot-brown-fired"
+          "code": "herbalistpots:herbalist-pot-brown-fired"
         }
       }
     },
@@ -62,39 +65,27 @@
       "beehivekiln": {
         "0": {
           "type": "block",
-          "code": "herbalist-pot-cream-fired"
+          "code": "herbalistpots:herbalist-pot-cream-fired"
         },
         "1": {
           "type": "block",
-          "code": "herbalist-pot-gray-fired"
+          "code": "herbalistpots:herbalist-pot-gray-fired"
         },
         "2": {
           "type": "block",
-          "code": "herbalist-pot-black-fired"
+          "code": "herbalistpots:herbalist-pot-black-fired"
         },
         "3": {
           "type": "block",
-          "code": "herbalist-pot-black-fired"
+          "code": "herbalistpots:herbalist-pot-black-fired"
         }
       }
     },
     "herbalist-pot-fire-raw": {
       "beehivekiln": {
-        "0": {
+        "all": {
           "type": "block",
-          "code": "herbalist-pot-fire-fired"
-        },
-        "1": {
-          "type": "block",
-          "code": "herbalist-pot-fire-fired"
-        },
-        "2": {
-          "type": "block",
-          "code": "herbalist-pot-fire-fired"
-        },
-        "3": {
-          "type": "block",
-          "code": "herbalist-pot-fire-fired"
+          "code": "herbalistpots:herbalist-pot-fire-fired"
         }
       }
     }
