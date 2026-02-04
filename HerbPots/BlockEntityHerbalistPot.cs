@@ -23,7 +23,7 @@ namespace HerbPots
         private MeshData contentMesh;
         public HerbalistPotGrowthProps growthProps = HerbalistPotGrowthProps.DefaultValues;
 
-        public virtual float MeshAngle { get; protected set; }
+        public virtual float MeshAngle { get; set; }
         public virtual double LastHourTimestamp { get; protected set; }
         public virtual float GrowthChance { get; protected set; }
         public virtual int StoredProducts { get; protected set; }
