@@ -31,7 +31,7 @@ namespace HerbPots
 
         public static HerbalistPotGrowthProps DefaultValues = new HerbalistPotGrowthProps
         {
-            tickInterval = 2000,
+            tickInterval = 10000,
             calendarTimeIntervalHours = 24.0,
             baseGrowChance = 0.5f,
             growChanceIncrement = 0.1f,

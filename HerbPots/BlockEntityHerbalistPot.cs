@@ -102,14 +102,15 @@ namespace HerbPots
             if (api.Side == EnumAppSide.Client && potMesh == null)
             {
                 GenerateMeshes();
+                MarkDirty(redrawOnClient: true);
             }
             if (Block is BlockHerbalistPot herbalistPotBlock)
             {
                 growthProps = herbalistPotBlock.Attributes["growBehavior"]?.AsObject<HerbalistPotGrowthProps>(HerbalistPotGrowthProps.DefaultValues);
             }
-            RegisterGameTickListener(CheckCanGrow, growthProps.tickInterval);
             LastHourTimestamp = api.World.Calendar.ElapsedHours;
             GrowthChance = growthProps.baseGrowChance;
+            RegisterGameTickListener(CheckCanGrow, growthProps.tickInterval);
             MarkDirty(redrawOnClient: true);
         }
 
@@ -127,13 +128,13 @@ namespace HerbPots
                 {
                     StoredProducts++;
                     GrowthChance = growthProps.baseGrowChance;
-                    LastHourTimestamp = elapsedHours;
-                    MarkDirty(redrawOnClient: true);
                 }
                 else
                 {
                     GrowthChance += growthProps.growChanceIncrement;
                 }
+                LastHourTimestamp = elapsedHours;
+                MarkDirty(redrawOnClient: true);
             }
         }
 
