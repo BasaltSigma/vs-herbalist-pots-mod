@@ -6,7 +6,7 @@
         "BasaltSigma"
     ],
     "description": "Clay pots that grow more flowers once planted",
-    "version": "0.21.0",
+    "version": "0.21.1",
     "dependencies": {
         "game": "1.21"
     }
