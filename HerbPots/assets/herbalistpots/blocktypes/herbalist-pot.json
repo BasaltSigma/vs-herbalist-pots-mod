@@ -42,8 +42,8 @@
     },
     "growBehavior": {
       "tickInterval": 2000,
-      "calendarTimeIntervalHours": 24.0,
-      "baseGrowChancePerDay": 0.5,
+      "calendarTimeIntervalHours": 168.0,
+      "baseGrowChance": 0.5,
       "growChanceIncrement": 0.1,
       "maxGrownStackSize": 4
     },

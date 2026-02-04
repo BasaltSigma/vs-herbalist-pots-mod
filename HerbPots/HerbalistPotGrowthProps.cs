@@ -19,7 +19,7 @@ namespace HerbPots
         /// <summary>
         /// Growth chance of the flower on the first tick of this growth period
         /// </summary>
-        public float baseGrowChancePerDay;
+        public float baseGrowChance;
         /// <summary>
         /// How much the chance of growth increases for every failed growth tick
         /// </summary>
@@ -33,7 +33,7 @@ namespace HerbPots
         {
             tickInterval = 2000,
             calendarTimeIntervalHours = 24.0,
-            baseGrowChancePerDay = 0.5f,
+            baseGrowChance = 0.5f,
             growChanceIncrement = 0.1f,
             maxGrownStackSize = 4
         };

@@ -87,7 +87,7 @@ namespace HerbPots
         {
             inv = new InventoryGeneric(1, null, null);
             inv.OnAcquireTransitionSpeed += slotTransitionSpeed;
-            GrowthChance = growthProps.baseGrowChancePerDay;
+            GrowthChance = growthProps.baseGrowChance;
         }
 
         private float slotTransitionSpeed(EnumTransitionType transitionType, ItemStack stack, float mulByConfig)
@@ -102,7 +102,6 @@ namespace HerbPots
             if (api.Side == EnumAppSide.Client && potMesh == null)
             {
                 GenerateMeshes();
-                MarkDirty(redrawOnClient: true);
             }
             if (Block is BlockHerbalistPot herbalistPotBlock)
             {
@@ -110,6 +109,8 @@ namespace HerbPots
             }
             RegisterGameTickListener(CheckCanGrow, growthProps.tickInterval);
             LastHourTimestamp = api.World.Calendar.ElapsedHours;
+            GrowthChance = growthProps.baseGrowChance;
+            MarkDirty(redrawOnClient: true);
         }
 
         protected virtual void CheckCanGrow(float delta)
@@ -125,7 +126,7 @@ namespace HerbPots
                 if (rand < GrowthChance)
                 {
                     StoredProducts++;
-                    GrowthChance = growthProps.baseGrowChancePerDay;
+                    GrowthChance = growthProps.baseGrowChance;
                     LastHourTimestamp = elapsedHours;
                     MarkDirty(redrawOnClient: true);
                 }
@@ -155,7 +156,7 @@ namespace HerbPots
                 (player as IClientPlayer)?.TriggerFpAnimation(EnumHandInteract.HeldItemInteract);
                 fromSlot.MarkDirty();
                 StoredProducts = 0;
-                GrowthChance = growthProps.baseGrowChancePerDay;
+                GrowthChance = growthProps.baseGrowChance;
                 LastHourTimestamp = Api.World.Calendar.ElapsedHours;
                 MarkDirty(redrawOnClient: true);
                 return true;
@@ -179,7 +180,7 @@ namespace HerbPots
                     takenStackSize = StoredProducts;
                     StoredProducts = 0;
                     LastHourTimestamp = Api.World.Calendar.ElapsedHours;
-                    GrowthChance = growthProps.baseGrowChancePerDay;
+                    GrowthChance = growthProps.baseGrowChance;
                     MarkDirty(redrawOnClient: true);
                     return true;
                 }
