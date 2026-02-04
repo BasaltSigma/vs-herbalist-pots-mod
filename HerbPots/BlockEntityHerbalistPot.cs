@@ -23,9 +23,10 @@ namespace HerbPots
         private MeshData contentMesh;
         public HerbalistPotGrowthProps growthProps = HerbalistPotGrowthProps.DefaultValues;
 
-        public virtual float MeshAngle { get; set; }
-        public virtual float GrowthChance { get; set; }
-        public virtual int StoredProducts { get; set; }
+        public virtual float MeshAngle { get; protected set; }
+        public virtual double LastHourTimestamp { get; protected set; }
+        public virtual float GrowthChance { get; protected set; }
+        public virtual int StoredProducts { get; protected set; }
 
         public override InventoryBase Inventory => inv;
         public Size2i AtlasSize => capi.BlockTextureAtlas.Size;
@@ -86,7 +87,7 @@ namespace HerbPots
         {
             inv = new InventoryGeneric(1, null, null);
             inv.OnAcquireTransitionSpeed += slotTransitionSpeed;
-            GrowthChance = growthProps.baseGrowChance;
+            GrowthChance = growthProps.baseGrowChancePerDay;
         }
 
         private float slotTransitionSpeed(EnumTransitionType transitionType, ItemStack stack, float mulByConfig)
@@ -107,26 +108,31 @@ namespace HerbPots
             {
                 growthProps = herbalistPotBlock.Attributes["growBehavior"]?.AsObject<HerbalistPotGrowthProps>(HerbalistPotGrowthProps.DefaultValues);
             }
-            RegisterGameTickListener(OnTick, growthProps.tickInterval);
+            RegisterGameTickListener(CheckCanGrow, growthProps.tickInterval);
+            LastHourTimestamp = api.World.Calendar.ElapsedHours;
         }
 
-        protected override void OnTick(float delta)
+        protected virtual void CheckCanGrow(float delta)
         {
-            base.OnTick(delta);
             if (inv[0].Empty || StoredProducts >= growthProps.maxGrownStackSize)
             {
                 return;
             }
-            float rand = Api.World.Rand.NextSingle();
-            if (rand < GrowthChance)
+            double elapsedHours = Api.World.Calendar.ElapsedHours;
+            if ((elapsedHours - LastHourTimestamp) > growthProps.calendarTimeIntervalHours)
             {
-                StoredProducts++;
-                GrowthChance = growthProps.baseGrowChance;
-                MarkDirty(redrawOnClient: true);
-            }
-            else
-            {
-                GrowthChance += growthProps.growChanceIncrement;
+                float rand = Api.World.Rand.NextSingle();
+                if (rand < GrowthChance)
+                {
+                    StoredProducts++;
+                    GrowthChance = growthProps.baseGrowChancePerDay;
+                    LastHourTimestamp = elapsedHours;
+                    MarkDirty(redrawOnClient: true);
+                }
+                else
+                {
+                    GrowthChance += growthProps.growChanceIncrement;
+                }
             }
         }
 
@@ -149,6 +155,8 @@ namespace HerbPots
                 (player as IClientPlayer)?.TriggerFpAnimation(EnumHandInteract.HeldItemInteract);
                 fromSlot.MarkDirty();
                 StoredProducts = 0;
+                GrowthChance = growthProps.baseGrowChancePerDay;
+                LastHourTimestamp = Api.World.Calendar.ElapsedHours;
                 MarkDirty(redrawOnClient: true);
                 return true;
             }
@@ -170,6 +178,8 @@ namespace HerbPots
                     (player as IClientPlayer)?.TriggerFpAnimation(EnumHandInteract.HeldItemInteract);
                     takenStackSize = StoredProducts;
                     StoredProducts = 0;
+                    LastHourTimestamp = Api.World.Calendar.ElapsedHours;
+                    GrowthChance = growthProps.baseGrowChancePerDay;
                     MarkDirty(redrawOnClient: true);
                     return true;
                 }
@@ -361,6 +371,7 @@ namespace HerbPots
             MeshAngle = tree.GetFloat("meshAngle", MeshAngle);
             GrowthChance = tree.GetFloat("growthChance", GrowthChance);
             StoredProducts = tree.GetInt("storedProducts", StoredProducts);
+            LastHourTimestamp = tree.GetDouble("lastHourTimestamp", LastHourTimestamp);
             if (capi != null)
             {
                 GenerateMeshes();
@@ -374,6 +385,7 @@ namespace HerbPots
             tree.SetFloat("meshAngle", MeshAngle);
             tree.SetFloat("growthChance", GrowthChance);
             tree.SetInt("storedProducts", StoredProducts);
+            tree.SetDouble("lastHourTimestamp", LastHourTimestamp);
         }
 
         public override bool OnTesselation(ITerrainMeshPool mesher, ITesselatorAPI tessThreadTesselator)

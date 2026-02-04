@@ -13,9 +13,13 @@ namespace HerbPots
         /// </summary>
         public int tickInterval;
         /// <summary>
+        /// How many in-game hours between each roll check for growth
+        /// </summary>
+        public double calendarTimeIntervalHours;
+        /// <summary>
         /// Growth chance of the flower on the first tick of this growth period
         /// </summary>
-        public float baseGrowChance;
+        public float baseGrowChancePerDay;
         /// <summary>
         /// How much the chance of growth increases for every failed growth tick
         /// </summary>
@@ -27,9 +31,10 @@ namespace HerbPots
 
         public static HerbalistPotGrowthProps DefaultValues = new HerbalistPotGrowthProps
         {
-            tickInterval = 60_000,
-            baseGrowChance = 0.03f,
-            growChanceIncrement = 0.01f,
+            tickInterval = 2000,
+            calendarTimeIntervalHours = 24.0,
+            baseGrowChancePerDay = 0.5f,
+            growChanceIncrement = 0.1f,
             maxGrownStackSize = 4
         };
     }

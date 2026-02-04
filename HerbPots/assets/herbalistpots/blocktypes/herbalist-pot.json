@@ -41,9 +41,10 @@
       "scale": 0.6
     },
     "growBehavior": {
-      "tickInterval": 60000,
-      "baseGrowChance": 0.03,
-      "growChanceIncrement": 0.01,
+      "tickInterval": 2000,
+      "calendarTimeIntervalHours": 24.0,
+      "baseGrowChancePerDay": 0.5,
+      "growChanceIncrement": 0.1,
       "maxGrownStackSize": 4
     },
     "handbook": {
