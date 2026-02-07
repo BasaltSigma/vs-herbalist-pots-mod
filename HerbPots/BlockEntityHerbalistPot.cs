@@ -21,12 +21,17 @@ namespace HerbPots
         private Dictionary<string, AssetLocation> shapeTextures;
         private MeshData potMesh;
         private MeshData contentMesh;
-        public HerbalistPotGrowthProps growthProps = HerbalistPotGrowthProps.DefaultValues;
+
+        // local copies
+        internal HerbalistPotGrowthProps growthProps;
+        internal JsonObject growthTemp;
 
         public virtual float MeshAngle { get; set; }
         public virtual double LastHourTimestamp { get; protected set; }
         public virtual float GrowthChance { get; protected set; }
         public virtual int StoredProducts { get; protected set; }
+        private GrowthTemperatureRange CurrentTempRange;
+        private bool InvalidTemperature = false;
 
         public override InventoryBase Inventory => inv;
         public Size2i AtlasSize => capi.BlockTextureAtlas.Size;
@@ -104,14 +109,33 @@ namespace HerbPots
                 GenerateMeshes();
                 MarkDirty(redrawOnClient: true);
             }
-            if (Block is BlockHerbalistPot herbalistPotBlock)
+            growthProps = HerbPotsModSystem.GrowthProps;
+            if (!growthProps.useDefaultTemperatureRange)
             {
-                growthProps = herbalistPotBlock.Attributes["growBehavior"]?.AsObject<HerbalistPotGrowthProps>(HerbalistPotGrowthProps.DefaultValues);
+                growthTemp = HerbPotsModSystem.GrowthTemps;
             }
             LastHourTimestamp = api.World.Calendar.ElapsedHours;
             GrowthChance = growthProps.baseGrowChance;
             RegisterGameTickListener(CheckCanGrow, growthProps.tickInterval);
             MarkDirty(redrawOnClient: true);
+        }
+
+        private GrowthTemperatureRange GetTempRange()
+        {
+            if (inv[0].Empty || growthProps.useDefaultTemperatureRange || growthTemp == null)
+            {
+                return new GrowthTemperatureRange
+                {
+                    minTemperature = growthProps.overrideDefaultMinTemp,
+                    maxTemperature = growthProps.overrideDefaultMaxTemp
+                };
+            }
+            string flowerCode = inv[0].Itemstack?.Block.Code.SecondCodePart();
+            if (!string.IsNullOrEmpty(flowerCode) && growthTemp.KeyExists(flowerCode))
+            {
+                return growthTemp[flowerCode].AsObject<GrowthTemperatureRange>();
+            }
+            return growthTemp["default"].AsObject<GrowthTemperatureRange>();
         }
 
         protected virtual void CheckCanGrow(float delta)
@@ -121,6 +145,20 @@ namespace HerbPots
                 return;
             }
             double elapsedHours = Api.World.Calendar.ElapsedHours;
+            if (growthProps.enableTempRestrictions)
+            {
+                float currentTemp = Api.World.BlockAccessor.GetClimateAt(Pos).Temperature;
+                if (CurrentTempRange == null)
+                {
+                    CurrentTempRange = GetTempRange();
+                }
+                InvalidTemperature = currentTemp < CurrentTempRange.minTemperature || currentTemp > CurrentTempRange.maxTemperature;
+                if (InvalidTemperature)
+                {
+                    LastHourTimestamp = elapsedHours;
+                    return;
+                }
+            }
             if ((elapsedHours - LastHourTimestamp) > growthProps.calendarTimeIntervalHours)
             {
                 float rand = Api.World.Rand.NextSingle();
@@ -160,6 +198,7 @@ namespace HerbPots
                 GrowthChance = growthProps.baseGrowChance;
                 LastHourTimestamp = Api.World.Calendar.ElapsedHours;
                 MarkDirty(redrawOnClient: true);
+                CurrentTempRange = GetTempRange();
                 return true;
             }
             return false;
@@ -206,6 +245,7 @@ namespace HerbPots
                 StoredProducts = 0;
                 inv[0].MarkDirty();
                 MarkDirty(redrawOnClient: true);
+                CurrentTempRange = null;
                 return true;
             }
             return false;
@@ -216,6 +256,10 @@ namespace HerbPots
             if (Contents != null)
             {
                 dsc.AppendLine(Lang.Get("herbalistpots:info-planted-herb", Contents.GetName()));
+                if (InvalidTemperature)
+                {
+                    dsc.AppendLine(Lang.Get("herbalistpots:info-climate-invalid-temperature"));
+                }
                 if (StoredProducts > 0)
                 {
                     dsc.AppendLine(Lang.Get("herbalistpots:info-products-available", StoredProducts.ToString()));

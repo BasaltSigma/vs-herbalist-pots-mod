@@ -16,6 +16,7 @@
   "info-planted-herb": "Planted: {0}",
   "info-products-available": "{0} Sprouts Available",
   "info-products-empty": "Nothing grown yet",
+  "info-climate-invalid-temperature": "Unsuitable temperature, growing paused",
 
   "blockhelp-herbalist-pot-plant": "Plant",
   "blockhelp-herbalist-pot-harvest": "Harvest",
