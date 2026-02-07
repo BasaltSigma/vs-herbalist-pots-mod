@@ -1,0 +1,88 @@
+{
+  "flowers": {
+    "catmint": {
+      "minTemperature": -3,
+      "maxTemperature": 22
+    },
+    "lupine-blue": {
+      "minTemperature": -3,
+      "maxTemperature": 22
+    },
+    "lupine-purple": {
+      "minTemperature": -3,
+      "maxTemperature": 22
+    },
+    "woad": {
+      "minTemperature": -5,
+      "maxTemperature": 25
+    },
+    "forgetmenot": {
+      "minTemperature": 5,
+      "maxTemperature": 23
+    },
+    "wilddaisy": {
+      "minTemperature": 5,
+      "maxTemperature": 24
+    },
+    "cowparsley": {
+      "minTemperature": 0,
+      "maxTemperature": 25
+    },
+    "cornflower": {
+      "minTemperature": 0,
+      "maxTemperature": 25
+    },
+    "edelweiss": {
+      "minTemperature": -4,
+      "maxTemperature": 15
+    },
+    "redtopgrass": {
+      "minTemperature": -3,
+      "maxTemperature": 25
+    },
+    "heather": {
+      "minTemperature": 0,
+      "maxTemperature": 18
+    },
+    "westerngorse": {
+      "minTemperature": -1,
+      "maxTemperature": 17
+    },
+    "goldenpoppy": {
+      "minTemperature": 20,
+      "maxTemperature": 28
+    },
+    "horsetail": {
+      "minTemperature": -5,
+      "maxTemperature": 20
+    },
+    "lilyofthevalley": {
+      "minTemperature": 0,
+      "maxTemperature": 15
+    },
+    "orangemallow": {
+      "minTemperature": 16,
+      "maxTemperature": 40
+    },
+    "rafflesia-red": {
+      "minTemperature": 28,
+      "maxTemperature": 42
+    },
+    "rafflesia-brown": {
+      "minTemperature": 28,
+      "maxTemperature": 42
+    },
+    "croton-small": {
+      "minTemperature": 23,
+      "maxTemperature": 44
+    },
+    "croton-medium": {
+      "minTemperature": 23,
+      "maxTemperature": 44
+    },
+    "default": {
+      "minTemperature": -10,
+      "maxTemperature": 40
+    }
+  }
+}

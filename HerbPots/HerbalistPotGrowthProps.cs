@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace HerbPots
 {
+    [JsonObject]
     public class HerbalistPotGrowthProps
     {
         /// <summary>
@@ -28,14 +30,48 @@ namespace HerbPots
         /// Max output stack size
         /// </summary>
         public int maxGrownStackSize;
+        /// <summary>
+        /// True if the herbalist pots should be limited by its world temperature
+        /// </summary>
+        public bool enableTempRestrictions;
+        /// <summary>
+        /// Makes temp range for all flowers universal instead of flower specific
+        /// </summary>
+        public bool useDefaultTemperatureRange;
+        /// <summary>
+        /// Default min temp to use if default temperatures enabled
+        /// </summary>
+        public int overrideDefaultMinTemp;
+        /// <summary>
+        /// Default max temp to use if default temperatures enabled
+        /// </summary>
+        public int overrideDefaultMaxTemp;
 
+        [JsonIgnore]
         public static HerbalistPotGrowthProps DefaultValues = new HerbalistPotGrowthProps
         {
             tickInterval = 10000,
             calendarTimeIntervalHours = 24.0,
             baseGrowChance = 0.5f,
             growChanceIncrement = 0.1f,
-            maxGrownStackSize = 4
+            maxGrownStackSize = 4,
+            enableTempRestrictions = true,
+            useDefaultTemperatureRange = false,
+            overrideDefaultMinTemp = -10,
+            overrideDefaultMaxTemp = 40
         };
+    }
+
+    [JsonObject]
+    public class GrowthTemperatureRange
+    {
+        /// <summary>
+        /// Lower bound of growth temperature range
+        /// </summary>
+        public int minTemperature;
+        /// <summary>
+        /// Upper bound of growth temperature range
+        /// </summary>
+        public int maxTemperature;
     }
 }
