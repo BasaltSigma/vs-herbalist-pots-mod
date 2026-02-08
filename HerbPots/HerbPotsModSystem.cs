@@ -1,4 +1,5 @@
-﻿using Vintagestory.API.Client;
+﻿using System;
+using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Config;
 using Vintagestory.API.Datastructures;
@@ -28,6 +29,7 @@ namespace HerbPots
                 api.StoreModConfig(HerbalistPotGrowthProps.DefaultValues, MOD_CONFIG_FILENAME);
                 GrowthProps = api.LoadModConfig<HerbalistPotGrowthProps>(MOD_CONFIG_FILENAME);
             }
+            ValidateConfigValues();
 
             // block entity registries
             api.RegisterBlockEntityClass("BlockEntityHerbalistPot", typeof(BlockEntityHerbalistPot));
@@ -46,6 +48,22 @@ namespace HerbPots
             {
                 GrowthProps.useDefaultTemperatureRange = true;
             }
+        }
+
+        /// <summary>
+        /// Ensure realistic values from mod config for a sanity check
+        /// To guard against unexpected or invalid values (e.g. negative numbers or very large numbers)
+        /// </summary>
+        private void ValidateConfigValues()
+        {
+            int fourYearsInHours = 24 * 7 * 12 * 4;
+            int dayInMs = 60_000 * 60 * 24;
+            GrowthProps.calendarTimeIntervalHours = Math.Clamp(GrowthProps.calendarTimeIntervalHours, 1, fourYearsInHours);
+            GrowthProps.tickInterval = Math.Clamp(GrowthProps.tickInterval, 250, dayInMs);
+            GrowthProps.baseGrowChance = Math.Clamp(GrowthProps.baseGrowChance, 0.01f, 1.0f);
+            GrowthProps.growChanceIncrement = Math.Clamp(GrowthProps.growChanceIncrement, 0.01f, 1.0f);
+            GrowthProps.overrideDefaultMinTemp = Math.Clamp(GrowthProps.overrideDefaultMinTemp, -273, 2000);
+            GrowthProps.overrideDefaultMaxTemp = Math.Clamp(GrowthProps.overrideDefaultMaxTemp, -273, 2000);
         }
     }
 }
